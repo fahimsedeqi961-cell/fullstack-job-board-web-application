@@ -5,6 +5,9 @@ import authRoutes from "./src/routes/authRoutes.js"
 import morgan from "morgan";
 import globalErrorHandler from "./src/middleware/globalErrorHandler.js";
 import cookieParser from "cookie-parser";
+import profileRoutes from "./src/routes/profileRoutes.js";
+import jobRoutes from "./src/routes/jobRoutes.js";
+
 
 const app = express();
 dotenv.config();
@@ -22,6 +25,8 @@ app.use(cookieParser());
 
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/jobs", jobRoutes);
 
 
 app.use(globalErrorHandler);

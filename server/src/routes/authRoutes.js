@@ -11,10 +11,10 @@ router.post("/logout", logout);
 
 router.get("/test",
   authMiddleware,
-  requireRole("jobseeker"),
+  requireRole("employer"),
   (req, res) => {
     res.status(200).json({
-      message: "This is protected route..."
+      message: "This is protected route... your authenticated."
     });
   })
 

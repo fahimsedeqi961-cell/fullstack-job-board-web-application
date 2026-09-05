@@ -55,9 +55,9 @@ export const login = async (req, res, next) => {
     const accessToken = jwt.sign(
       { id: user._id, name: user.name },
       process.env.ACCESS_TOKEN_SECRETE,
-      { expiresIn: "15m" }
+      { expiresIn: "1h" }
     )
-    // Generate the access token 
+    // Generate the refresh token 
     const refreshToken = jwt.sign(
       { id: user._id },
       process.env.REFRESH_TOKEN_SECRETE,
@@ -99,8 +99,6 @@ export const refreshToken = async (req, res, next) => {
   try {
 
     const token = req.cookies.refreshToken;
-
-    console.log(token);
 
     const decoded = jwt.verify(
       token,
