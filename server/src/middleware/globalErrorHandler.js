@@ -6,7 +6,6 @@ const globalErrorHandler = async (err, req, res, next) => {
     method: req.method,
     url: req.originalUrl,
     stack: err.stack
-
   })
   if (err.isOperational) {
     res.status(err.statusCode || 500).json({
