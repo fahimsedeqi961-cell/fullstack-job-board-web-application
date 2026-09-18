@@ -181,8 +181,6 @@ export const getEmpApplications = async (req, res, next) => {
       }
     );
 
-    console.log(req.user);
-
     res.status(200).json({
       success: true,
       message: "Apllications fetched successfully",
@@ -193,6 +191,7 @@ export const getEmpApplications = async (req, res, next) => {
   }
 }
 
+// Update the employer's jobs applications using the id 
 export const updateEmployerApp = async (req, res, next) => {
   try {
 

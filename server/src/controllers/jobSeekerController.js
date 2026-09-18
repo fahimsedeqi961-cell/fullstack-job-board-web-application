@@ -91,7 +91,7 @@ export const updateProfile = async (req, res, next) => {
   }
 }
 
-
+// Get job-seekers profile
 export const getProfile = async (req, res, next) => {
   try {
     const profile = await JobSeekerProfile.findOne(
@@ -113,7 +113,7 @@ export const getProfile = async (req, res, next) => {
 
 }
 
-
+// Save a job to the job-seekers profile using the bob id
 export const saveJobs = async (req, res, next) => {
   try {
     const { jobId } = req.params;
@@ -138,7 +138,7 @@ export const saveJobs = async (req, res, next) => {
       throw new AppError("Job seeker profile not found", 404);
     }
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: "Job saved successfully",
       saveJob
@@ -147,6 +147,8 @@ export const saveJobs = async (req, res, next) => {
     next(err);
   }
 }
+
+// Get all saved jobs fron saved jobs list 
 
 export const getSavedJobs = async (req, res, next) => {
   try {
@@ -160,7 +162,7 @@ export const getSavedJobs = async (req, res, next) => {
     const savedJobs = profile.savedJobs;
     res.status(200).json({
       success: true,
-      message: "Saved jobs fetches successfully",
+      message: "Saved jobs fetched successfully",
       savedJobs
     })
   } catch (err) {
@@ -169,6 +171,7 @@ export const getSavedJobs = async (req, res, next) => {
 };
 
 
+// Remove the saved job from the list of saved jobs 
 export const removeSavedJobs = async (req, res, next) => {
 
   try {
@@ -183,7 +186,7 @@ export const removeSavedJobs = async (req, res, next) => {
     if (!profile) {
       throw new AppError("Profile not found", 404);
     }
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: "Job removed successfully",
     })

@@ -35,7 +35,6 @@ export const createEmpProfile = async (req, res, next) => {
     const existingProfile = await EmployerProfile.findOne({
       user: req.user.id
     });
-    console.log(req.user.id);
     if (existingProfile) {
       throw new AppError("Emplouer profile already exist", 409);
     }
