@@ -1,6 +1,10 @@
 {
-  "wellcome": "Wellcome to  job Board",
-  "home": "Home",
-  "jobs": "Jobs",
-  "login": "Login"
+  "nav": {
+    "home": "Home",
+    "findJobs": "Find Jobs",
+    "companies": "Companies",
+    "about": "About Us",
+    "contact": "Contact",
+    "login": "Login / Sign up"
+  }
 }

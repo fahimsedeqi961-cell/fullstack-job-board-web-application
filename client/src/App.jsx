@@ -1,34 +1,31 @@
-import { useContext } from "react";
-import { ThemeContext } from "../src/context/themeContext.jsx"
-import LanguageSwitcher from "./components/languageSwitcher.jsx";
-import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
-
+import { Route, Routes } from "react-router-dom";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
+import Jobs from "./pages/Jobs.jsx";
+import JobDetails from "./pages/JobDetails.jsx";
+import MainLayout from "./layouts/MainLayout.jsx";
+import Home from "./pages/Home.jsx";
 function App() {
-  const { t, i18n } = useTranslation();
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  // useEffect(() => {
+  //   const isRTL = i18n.language === "fa" || i18n.language === "pa";
 
-  useEffect(() => {
-    const direction = i18n.language === "en" ? "ltr" : "rtl";
-
-    document.documentElement.dir = direction;
-    document.documentElement.lang = i18n.language
-  }, [i18n.language]);
+  //   document.documentElement.dir = isRTL ? "rtl" : "ltr";
+  //   document.documentElement.lang = i18n.language
+  // }, [i18n.language]);
 
   return (
     <>
-      <LanguageSwitcher />
-      <div
-        onClick={toggleTheme}
-        className="w-full h-screen bg-white dark:bg-slate-900 text-gray-500 ">
-        <h1 className="text-6xl font-bold text-gray-800 dark:text-red-500 text-center mt-50 mx-30">Job Board fullStack (MERN) Project </h1>
-        <h1>{t("wellcome")}</h1>
-        <p>{t("home")}</p>
-        <p>{t("jobs")}</p>
-        <p>{t("login")}</p>
-      </div>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/findjobs" element={<Jobs />} />
+          <Route path="/jobs/:id" element={<JobDetails />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
 export default App;
