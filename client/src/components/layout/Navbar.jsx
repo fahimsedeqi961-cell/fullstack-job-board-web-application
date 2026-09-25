@@ -45,7 +45,7 @@ function Navbar() {
             />
 
             <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              JobBox
+              Carrer
             </span>
           </Link>
 

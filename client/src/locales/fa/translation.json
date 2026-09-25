@@ -6,5 +6,26 @@
     "about": "درباره ما",
     "contact": "تماس با ما",
     "login": "ورود / ثبت نام"
+  },
+
+  "footer": {
+    "quickLinks": "لینک‌های سریع",
+    "jobSeekers": "برای جویندگان کار",
+    "employers": "برای کارفرمایان",
+    "legal": "حقوقی",
+    "home": "خانه",
+    "jobs": "فرصت‌های شغلی",
+    "about": "درباره ما",
+    "contact": "تماس با ما",
+    "browseJobs": "جستجوی فرصت‌های شغلی",
+    "savedJobs": "فرصت‌های ذخیره‌شده",
+    "myApplications": "درخواست‌های من",
+    "myProfile": "پروفایل من",
+    "employerDashboard": "داشبورد کارفرما",
+    "postJob": "ثبت فرصت شغلی",
+    "manageJobs": "مدیریت فرصت‌های شغلی",
+    "applications": "درخواست‌ها",
+    "privacyPolicy": "سیاست حفظ حریم خصوصی",
+    "terms": "شرایط و قوانین"
   }
 }

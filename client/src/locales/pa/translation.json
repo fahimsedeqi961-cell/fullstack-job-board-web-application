@@ -6,5 +6,26 @@
     "about": "زموږ په اړه",
     "contact": "اړیکه",
     "login": "ننوتل / ثبت نام"
+  },
+
+  "footer": {
+    "quickLinks": "چټک لینکونه",
+    "jobSeekers": "د کار غوښتونکو لپاره",
+    "employers": "د کار ورکوونکو لپاره",
+    "legal": "حقوقي",
+    "home": "کور",
+    "jobs": "دندې",
+    "about": "زموږ په اړه",
+    "contact": "اړیکه",
+    "browseJobs": "د دندو لټون",
+    "savedJobs": "خوندي شوې دندې",
+    "myApplications": "زما غوښتنلیکونه",
+    "myProfile": "زما پروفایل",
+    "employerDashboard": "د کار ورکوونکي ډشبورډ",
+    "postJob": "دنده خپرول",
+    "manageJobs": "د دندو مدیریت",
+    "applications": "غوښتنلیکونه",
+    "privacyPolicy": "د محرمیت تګلاره",
+    "terms": "شرایط او قوانین"
   }
 }

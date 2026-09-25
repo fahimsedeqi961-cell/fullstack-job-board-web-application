@@ -6,5 +6,25 @@
     "about": "About Us",
     "contact": "Contact",
     "login": "Login / Sign up"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "jobSeekers": "For Job Seekers",
+    "employers": "For Employers",
+    "legal": "Legal",
+    "home": "Home",
+    "jobs": "Jobs",
+    "about": "About",
+    "contact": "Contact",
+    "browseJobs": "Browse Jobs",
+    "savedJobs": "Saved Jobs",
+    "myApplications": "My Applications",
+    "myProfile": "My Profile",
+    "employerDashboard": "Employer Dashboard",
+    "postJob": "Post a Job",
+    "manageJobs": "Manage Jobs",
+    "applications": "Applications",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms"
   }
 }
