@@ -1,38 +1,43 @@
 import express from "express";
-import { getALlJobs, createJob, updateExistingJob, deleteExistingJob, closeJob, getJobsById } from "../controllers/jobController.js";
-import { authMiddleware, requireRole } from "../middleware/authmiddleware.js";
+import {
+  getALlJobs,
+  createJob,
+  updateExistingJob,
+  deleteExistingJob,
+  closeJob,
+  getJobsById,
+  getCategories,
+} from "../controllers/jobController.js";
 
+import { authMiddleware, requireRole } from "../middleware/authmiddleware.js";
 
 const router = express.Router();
 
-
 router.get("/", getALlJobs);
-router.get("/:id", getJobsById);
 
 // Only authenticated employer creates new job
-router.post("/",
+router.post("/", authMiddleware, requireRole("employer"), createJob);
+
+// Get categories
+router.get("/categories", getCategories);
+
+// Get jobs by id
+router.get("/:id", getJobsById);
+
+router.patch(
+  "/:id",
   authMiddleware,
   requireRole("employer"),
-  createJob
+  updateExistingJob,
 );
-router.patch("/:id",
+
+router.patch("/:id/close", authMiddleware, requireRole("employer"), closeJob);
+
+router.delete(
+  "/:id",
   authMiddleware,
   requireRole("employer"),
-  updateExistingJob
+  deleteExistingJob,
 );
-
-router.patch("/:id/close",
-  authMiddleware,
-  requireRole("employer"),
-  closeJob
-);
-
-router.delete("/:id",
-  authMiddleware,
-  requireRole("employer"),
-  deleteExistingJob
-);
-
-
 
 export default router;

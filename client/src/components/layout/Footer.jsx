@@ -1,5 +1,5 @@
 import { Mail, Sparkles } from "lucide-react";
-import { Button } from "../Button";
+import { PrimaryBtn } from "../PrimaryBtn.jsx";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaFacebook, FaInstagram, FaTiktok, FaXTwitter } from "react-icons/fa6";
@@ -66,7 +66,7 @@ function Footer() {
                     className="absolute left-4 top-3.5 text-slate-500"
                   />
                 </div>
-                <Button btnName={"Subscribe Now"} />
+                <PrimaryBtn btnName={"Subscribe Now"} />
               </form>
             </div>
           </div>
