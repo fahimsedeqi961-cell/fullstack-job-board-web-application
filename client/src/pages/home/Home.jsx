@@ -1,4 +1,5 @@
 import Categories from "./Categories";
+import FeatureJobs from "./FeatureJobs";
 import HeroSection from "./HeroSection";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <>
       <HeroSection />
       <Categories />
+      <FeatureJobs />
     </>
   );
 };

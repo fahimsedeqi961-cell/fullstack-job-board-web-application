@@ -1,12 +1,11 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config();
-
 
 import User from "../models/user.js";
 import AppError from "../errors/appErrors.js";
 import bcrypt from "bcrypt";
 import { createhashToken } from "../utils/hashRefreshToken.js";
-import jwt, { decode } from "jsonwebtoken"
+import jwt, { decode } from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
   try {
@@ -22,20 +21,19 @@ export const register = async (req, res, next) => {
       username,
       email,
       password: hashedPassword,
-      role
+      role,
     });
     await user.save();
 
     res.status(201).json({
       success: true,
       message: "User created successfully...",
-      user
-    })
+      user,
+    });
   } catch (error) {
     next(error);
   }
-}
-
+};
 
 export const login = async (req, res, next) => {
   try {
@@ -45,65 +43,55 @@ export const login = async (req, res, next) => {
     if (!user) {
       throw new AppError("Wrong password or email credentials!");
     }
-    // compare the password 
+    // compare the password
     const isMatched = await bcrypt.compare(password, user.password);
     if (!isMatched) {
-      throw new AppError("Ivalid password or email credentials!")
+      throw new AppError("Ivalid password or email credentials!");
     }
 
-    // generate access token 
+    // generate access token
     const accessToken = jwt.sign(
       { id: user._id, name: user.name },
       process.env.ACCESS_TOKEN_SECRETE,
-      { expiresIn: "1h" }
-    )
-    // Generate the refresh token 
+      { expiresIn: "1h" },
+    );
+    // Generate the refresh token
     const refreshToken = jwt.sign(
       { id: user._id },
       process.env.REFRESH_TOKEN_SECRETE,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     const hashedRefreshToken = createhashToken(refreshToken);
-    // Store the hashed refresh token in the databse 
+    // Store the hashed refresh token in the databse
     user.refreshToken = hashedRefreshToken;
-    user.refreshTokenExpires = new Date(
-      Date.now() + 7 * 24 * 60 * 60 * 1000
-    );
+    user.refreshTokenExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
     await user.save();
-
 
     // send the refresh token in the cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV == "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 1000
-    })
+      maxAge: 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,
       message: "Loged in successfully!",
-      accessToken
+      accessToken,
     });
-
-
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
-
+};
 
 export const refreshToken = async (req, res, next) => {
   try {
-
     const token = req.cookies.refreshToken;
 
-    const decoded = jwt.verify(
-      token,
-      process.env.REFRESH_TOKEN_SECRETE
-    );
+    const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRETE);
     if (!decoded) {
       throw new AppError("Token not find or expired", 401);
     }
@@ -112,25 +100,24 @@ export const refreshToken = async (req, res, next) => {
 
     const user = await User.findOne({
       refreshToken: hashedToken,
-      refreshTokenExpires: { $gt: new Date() }
+      refreshTokenExpires: { $gt: new Date() },
     });
     if (!user) {
       throw new AppError("Invalid token or expired", 401);
     }
 
-    // Generate new access token 
+    // Generate new access token
     const accessToken = jwt.sign(
       { id: decoded.id },
       process.env.ACCESS_TOKEN_SECRETE,
-      { expiresIn: "15m" }
-    )
+      { expiresIn: "15m" },
+    );
 
     res.status(200).json({
       success: true,
       message: "Access token created",
-      accessToken
+      accessToken,
     });
-
   } catch (error) {
     next(error);
   }
@@ -139,12 +126,11 @@ export const refreshToken = async (req, res, next) => {
 export const logout = async (req, res, next) => {
   try {
     const token = req.cookies.refreshToken;
-
+    console.log("Refresh token accessed", token);
     const hashedToken = createhashToken(token);
-
     const user = await User.findOne({
       refreshToken: hashedToken,
-      refreshTokenExpires: { $gt: new Date() }
+      refreshTokenExpires: { $gt: new Date() },
     });
     if (!user) {
       throw new AppError("Invalid token or token expired..", 401);
@@ -152,20 +138,19 @@ export const logout = async (req, res, next) => {
 
     user.refreshToken = undefined;
     user.refreshTokenExpires = undefined;
-    await user.save()
+    await user.save();
 
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV == "production",
       sameSite: "strict",
-    })
+    });
 
     res.status(200).json({
       success: true,
-      message: "Log out successfully!"
+      message: "Log out successfully!",
     });
-
   } catch (error) {
     next(error);
   }
-}
+};

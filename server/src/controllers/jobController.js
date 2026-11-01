@@ -50,6 +50,7 @@ export const getALlJobs = async (req, res, next) => {
       sortOption = { createdAt: 1 };
     }
     const jobs = await Job.find(query)
+      .populate("employer", "companyName companyLogo")
       .sort(sortOption)
       .skip(skip)
       .limit(jobsPerPage);
@@ -68,11 +69,33 @@ export const getALlJobs = async (req, res, next) => {
   }
 };
 
+//Get Featured jobs
+export const featuredJobs = async (req, res, next) => {
+  try {
+    const jobs = await Job.find({ status: "open" })
+      .populate("employer", "companyName companyLogo")
+      .sort({ createdAt: -1 })
+      .limit(6);
+
+    res.status(200).json({
+      sucess: true,
+      message: "Featured Jobs Fetched sucessfully!",
+      jobs,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get jobs by id
 export const getJobsById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const job = await Job.findById(id);
+    const job = await Job.findById(id).populate(
+      "employer",
+      "companyName companyLogo description",
+    );
 
     if (!job) {
       throw new AppError("Job not found", 404);
@@ -251,6 +274,7 @@ export const closeJob = async (req, res, next) => {
   }
 };
 
+// Get categories
 export const getCategories = async (req, res, next) => {
   try {
     const categories = await Job.aggregate([
@@ -280,7 +304,6 @@ export const getCategories = async (req, res, next) => {
       message: "Categories fetched successfully",
       categories,
     });
-    console.log(categories);
   } catch (err) {
     next(err);
   }
