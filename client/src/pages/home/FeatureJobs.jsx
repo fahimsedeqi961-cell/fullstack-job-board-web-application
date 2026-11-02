@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import JobCard from "../../components/JobCard";
 import { getJobs } from "../../api/JobsApi";
+import { Link } from "react-router-dom";
 
 const FeaturedJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -101,6 +102,14 @@ const FeaturedJobs = () => {
             ))}
           </div>
         )}
+        <div className="mt-8 flex justify-center">
+          <Link
+            to="/findjobs"
+            className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
+          >
+            View All Jobs
+          </Link>
+        </div>
       </div>
     </section>
   );

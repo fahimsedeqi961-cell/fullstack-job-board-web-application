@@ -6,15 +6,18 @@ import App from "./App.jsx";
 import { ThemeProvider } from "./context/themeContext.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/authContext.jsx";
+import { SavedJobsProvider } from "./context/savedJobsContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </ThemeProvider>
+      <SavedJobsProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ThemeProvider>
+      </SavedJobsProvider>
     </BrowserRouter>
   </StrictMode>,
 );

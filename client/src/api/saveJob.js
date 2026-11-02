@@ -35,3 +35,20 @@ export const removeJob = async (id, token) => {
     throw err;
   }
 };
+
+export const getSavedJobs = async (token) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/api/v1/job-seeker/saved-jobs",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (err) {
+    console.log("Error Fetching saved jobs", err);
+    throw err;
+  }
+};

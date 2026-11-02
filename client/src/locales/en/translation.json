@@ -26,5 +26,10 @@
     "applications": "Applications",
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms"
+  },
+  "homePage": {
+    "heroTitleS1": "Find the job that fits you",
+    "heroTitleS2": "that fits you",
+    "heroParagraph": "Discover opportunities tailored to your education, skillset, and preferred lifestyle. Your dream career is just a quick search away."
   }
 }

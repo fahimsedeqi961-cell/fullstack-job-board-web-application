@@ -1,67 +1,17 @@
-import {
-  Bookmark,
-  Briefcase,
-  CircleDollarSign,
-  MapPin,
-  Signal,
-} from "lucide-react";
+import { Bookmark, Briefcase, CircleDollarSign, MapPin } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import { saveJob, removeJob } from "../api/saveJob";
-import { getProfile } from "../api/getJobSeekerProfile";
-import toast from "react-hot-toast";
+import useSavedJobs from "../hooks/useSavedJobs";
 
 function JobCard({ job }) {
   const navigate = useNavigate();
   const { token } = useContext(AuthContext);
-  const [isSaved, setIsSaved] = useState(false);
-
-  useEffect(() => {
-    const checkSavedJob = async () => {
-      try {
-        const profile = await getProfile(token);
-        const saved = profile.savedJobs.some(
-          (savedJob) => savedJob._id === job._id,
-        );
-        setIsSaved(saved);
-      } catch (err) {
-        console.log("Error checking saved job", err);
-      }
-    };
-    if (token) {
-      checkSavedJob();
-    }
-  }, [job._id, token]);
+  const { handleSaveJob, handleRemoveJob, isSaved } = useSavedJobs();
 
   const handleOnclick = (id) => {
     navigate(`/jobs/${id}`);
-  };
-
-  const handleSaveJob = async (id) => {
-    try {
-      await saveJob(id, token);
-      setIsSaved((prev) => !prev);
-      toast.success("Job saved successfully!");
-      console.log("Job saved successfully...");
-    } catch (err) {
-      console.log("Error saving job", err);
-      throw err;
-    }
-  };
-
-  const handleRemoveJob = async (id) => {
-    try {
-      await removeJob(id, token);
-      setIsSaved((prev) => !prev);
-      toast.success("Job removed successfully!");
-      console.log("Removed successfully...");
-    } catch (err) {
-      toast.error("Error removing saved job");
-      console.log("Error removing saved job", err);
-      throw err;
-    }
   };
 
   return (
@@ -103,17 +53,15 @@ function JobCard({ job }) {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              if (isSaved) {
-                handleRemoveJob(job._id);
-              } else {
-                handleSaveJob(job._id);
-              }
+              isSaved(job._id)
+                ? handleRemoveJob(job._id, token)
+                : handleSaveJob(job._id, token);
             }}
             className="flex h-8 w-8 shrink-0 items-center justify-center text-slate-400 bg-slate-50 rounded-lg transition-colors hover:text-blue-600 hover:bg-blue-50 dark:bg-slate-800 dark:text-slate-500 dark:hover:bg-slate-700/50 dark:hover:text-blue-400"
           >
             <Bookmark
               size={18}
-              fill={isSaved ? "currentColor" : "none"}
+              fill={isSaved(job._id) ? "currentColor" : "none"}
               className={isSaved ? "text-blue-600" : "text-slate-400"}
             />
           </button>

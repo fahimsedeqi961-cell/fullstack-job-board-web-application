@@ -2,12 +2,14 @@ import { MapPin, Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Stats from "./Stats";
+import { useTranslation } from "react-i18next";
 
 function HeroSection() {
   const [keyWord, setKeyWord] = useState("");
   const [location, setLocation] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const locations = [
     "Kabul",
@@ -47,16 +49,14 @@ function HeroSection() {
             {/* Content column */}
             <div className="col-span-12 text-center md:col-span-7 md:text-left">
               <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
-                Find The Job That <br className="hidden sm:inline" />
+                {t("homePage.heroTitleS1")} <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400">
-                  Fits Your Life
+                  {t("homePage.heroTitleS2")}
                 </span>
               </h1>
 
               <p className="mt-6 text-base leading-relaxed text-slate-600 max-w-xl mx-auto md:mx-0 lg:text-lg dark:text-slate-300">
-                Discover opportunities tailored to your education, skillset, and
-                preferred lifestyle. Your dream career is just a quick search
-                away.
+                {t("homePage.heroParagraph")}
               </p>
 
               {/* Search Bar Container */}

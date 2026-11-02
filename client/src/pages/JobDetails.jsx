@@ -14,7 +14,7 @@ import {
   LoaderCircle,
 } from "lucide-react";
 import { getJobById } from "../api/getJobById"; // Adjust path to your API file
-import { saveJob } from "../api/saveJob";
+import useSavedJobs from "../hooks/useSavedJobs";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
@@ -26,6 +26,7 @@ function JobDetails() {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { handleSaveJob, handleRemoveJob, isSaved } = useSavedJobs();
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -47,16 +48,6 @@ function JobDetails() {
 
     fetchJob();
   }, [id]);
-
-  const handleSaveJob = async (id) => {
-    try {
-      await saveJob(id, token);
-      console.log("job saved successfully...");
-    } catch (err) {
-      console.log("Error saving a job", err);
-      throw err;
-    }
-  };
 
   if (loading) {
     return (
@@ -172,11 +163,19 @@ function JobDetails() {
             <button
               type="button"
               aria-label="Save job"
-              onClick={() => handleSaveJob(id)}
+              onClick={() =>
+                isSaved(id)
+                  ? handleRemoveJob(id, token)
+                  : handleSaveJob(id, token)
+              }
               className="self-start rounded-xl border border-slate-200 p-3 text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-blue-500/10"
               title="Save job"
             >
-              <Bookmark size={20} />
+              <Bookmark
+                size={20}
+                fill={isSaved(id) ? "currentColor" : "none"}
+                className={isSaved ? "text-blue-600" : "text-slate-400"}
+              />
             </button>
           </div>
         </section>
