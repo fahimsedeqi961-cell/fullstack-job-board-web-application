@@ -9,7 +9,7 @@ function HeroSection() {
   const [location, setLocation] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const locations = [
     "Kabul",

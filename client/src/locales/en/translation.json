@@ -31,5 +31,15 @@
     "heroTitleS1": "Find the job that fits you",
     "heroTitleS2": "that fits you",
     "heroParagraph": "Discover opportunities tailored to your education, skillset, and preferred lifestyle. Your dream career is just a quick search away."
+  },
+  "howItWorks": {
+    "label": "How it works",
+    "title": "Find Your Dream Job in 3 Simple Steps",
+    "subtitle": "Whether you're looking for your next opportunity or searching for the right talent, our platform makes the process simple, fast, and seamless."
+  },
+  "callToAction": {
+    "label": "Ready to get started",
+    "title": "Your Next Opportunity Starts Here",
+    "subtitle": "Join thousands of professionals and companies leveraging our platform to find exceptional career paths and discover elite industry talent."
   }
 }
