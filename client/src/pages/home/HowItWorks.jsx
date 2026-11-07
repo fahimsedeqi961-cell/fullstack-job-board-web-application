@@ -35,7 +35,7 @@ const HowItWorks = () => {
           <span className="inline-block mb-3 text-xs font-bold text-blue-600 tracking-widest uppercase dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-3 py-1 rounded-full">
             {t("howItWorks.label", "Process")}
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight dark:text-slate-100">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight dark:text-slate-100">
             {t("howItWorks.title", "How It Works")}
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4 dark:text-slate-400 leading-relaxed">

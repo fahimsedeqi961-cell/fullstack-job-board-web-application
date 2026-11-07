@@ -1,22 +1,16 @@
-import AppError from "../errors/appErrors.js"
+import AppError from "../errors/appErrors.js";
 import JobSeekerProfile from "../models/jobSeekerProfile.js";
-import Job from "../models/job.js"
+import Job from "../models/job.js";
 
-
+// Create profile
 export const createProfile = async (req, res, next) => {
   try {
-    const {
-      bio,
-      resumeUrl,
-      skills,
-      location,
-      experienceLevel,
-      savedJobs
-    } = req.body;
+    const { bio, resumeUrl, skills, location, experienceLevel, savedJobs } =
+      req.body;
 
-    const existingJobseeker = await JobSeekerProfile.findOne(
-      { userId: req.user.id }
-    );
+    const existingJobseeker = await JobSeekerProfile.findOne({
+      userId: req.user.id,
+    });
 
     if (existingJobseeker) {
       throw new AppError("Profile already exists", 409);
@@ -29,7 +23,7 @@ export const createProfile = async (req, res, next) => {
       skills,
       location,
       experienceLevel,
-      savedJobs
+      savedJobs,
     });
 
     await jobSeeker.save();
@@ -37,32 +31,23 @@ export const createProfile = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "Profile created successfully",
-      jobSeeker
+      jobSeeker,
     });
-
   } catch (err) {
     next(err);
   }
-
 };
 
-
+// Update job seeker profie
 export const updateProfile = async (req, res, next) => {
   try {
-
-    const {
-      bio,
-      resumeUrl,
-      skills,
-      location,
-      experienceLevel,
-      savedJobs
-    } = req.body;
+    const { bio, resumeUrl, skills, location, experienceLevel, savedJobs } =
+      req.body;
 
     const profile = await JobSeekerProfile.findOneAndUpdate(
       {
         _id: id,
-        userId: req.user.id
+        userId: req.user.id,
       },
       {
         bio,
@@ -70,12 +55,12 @@ export const updateProfile = async (req, res, next) => {
         skills,
         location,
         experienceLevel,
-        savedJobs
+        savedJobs,
       },
       {
         new: true,
-        runValidators: true
-      }
+        runValidators: true,
+      },
     );
     if (!profile) {
       throw new AppError("Profile not found", 404);
@@ -84,19 +69,17 @@ export const updateProfile = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Profile Updated successfully",
-      profile
+      profile,
     });
   } catch (err) {
     next(err);
   }
-}
+};
 
 // Get job-seekers profile
 export const getProfile = async (req, res, next) => {
   try {
-    const profile = await JobSeekerProfile.findOne(
-      { userId: req.user.id }
-    );
+    const profile = await JobSeekerProfile.findOne({ userId: req.user.id });
 
     if (!profile) {
       throw new AppError("Profile not found", 404);
@@ -104,22 +87,18 @@ export const getProfile = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Profile fetched successfully",
-      profile
-    })
-
+      profile,
+    });
   } catch (err) {
     next(err);
   }
+};
 
-}
-
-// Save a job to the job-seekers profile using the bob id
+// Save a job to the job-seekers profile using the job id
 export const saveJobs = async (req, res, next) => {
   try {
     const { jobId } = req.params;
-    const job = await Job.findOne(
-      { _id: jobId }
-    );
+    const job = await Job.findOne({ _id: jobId });
 
     if (!job) {
       throw new AppError("Job not found", 404);
@@ -130,8 +109,8 @@ export const saveJobs = async (req, res, next) => {
       { $addToSet: { savedJobs: jobId } },
       {
         new: true,
-        runValidators: true
-      }
+        runValidators: true,
+      },
     );
 
     if (!saveJob) {
@@ -141,20 +120,20 @@ export const saveJobs = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Job saved successfully",
-      saveJob
-    })
+      saveJob,
+    });
   } catch (err) {
     next(err);
   }
-}
+};
 
-// Get all saved jobs fron saved jobs list 
+// Get all saved jobs fron saved jobs list
 
 export const getSavedJobs = async (req, res, next) => {
   try {
-    const profile = await JobSeekerProfile.findOne(
-      { userId: req.user.id }
-    ).populate("savedJobs")
+    const profile = await JobSeekerProfile.findOne({
+      userId: req.user.id,
+    }).populate("savedJobs");
 
     if (!profile) {
       throw new AppError("Profile not found", 404);
@@ -163,24 +142,22 @@ export const getSavedJobs = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Saved jobs fetched successfully",
-      savedJobs
-    })
+      savedJobs,
+    });
   } catch (err) {
     next(err);
   }
 };
 
-
-// Remove the saved job from the list of saved jobs 
+// Remove the saved job from the list of saved jobs
 export const removeSavedJobs = async (req, res, next) => {
-
   try {
     const { jobId } = req.params;
 
     const profile = await JobSeekerProfile.findOneAndUpdate(
       { userId: req.user.id },
       { $pull: { savedJobs: jobId } },
-      { new: true }
+      { new: true },
     );
 
     if (!profile) {
@@ -189,9 +166,8 @@ export const removeSavedJobs = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Job removed successfully",
-    })
-
+    });
   } catch (err) {
     next(err);
   }
-}
+};

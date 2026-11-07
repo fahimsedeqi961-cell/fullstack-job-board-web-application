@@ -12,7 +12,7 @@ function FindJobs() {
 
   return (
     <>
-      <h1 className="text-5xl font-bold">Jobs</h1>
+      <h1 className="text-5xl font-bold text-center my-20">No jobs to show</h1>
       <p>
         {search}
         {location}

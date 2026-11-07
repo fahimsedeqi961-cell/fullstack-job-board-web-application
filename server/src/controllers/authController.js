@@ -126,7 +126,7 @@ export const refreshToken = async (req, res, next) => {
 export const logout = async (req, res, next) => {
   try {
     const token = req.cookies.refreshToken;
-    console.log("Refresh token accessed", token);
+    console.log("Refresh token accessed ", token);
     const hashedToken = createhashToken(token);
     const user = await User.findOne({
       refreshToken: hashedToken,

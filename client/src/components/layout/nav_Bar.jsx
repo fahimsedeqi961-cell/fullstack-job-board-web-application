@@ -69,7 +69,7 @@ function Navbar() {
                   )}
                 </div>
 
-                <div className="flex hover:bg-blue-50 b rounded-sm p-2 transition-colors duration-300 dark:bg-white cursor-pointer">
+                <div className="flex hover:bg-blue-50  rounded-sm p-2 transition-colors duration-300 dark:bg-white cursor-pointer">
                   <select
                     name="language"
                     id=""
