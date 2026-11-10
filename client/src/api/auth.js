@@ -55,3 +55,20 @@ export const logout = async () => {
     throw err;
   }
 };
+
+// Access new accesstoken
+export const refreshToken = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/refresh-token",
+      {},
+      {
+        withCredentials: true,
+      },
+    );
+    return response.data;
+  } catch (err) {
+    console.log("Error getting access token", err);
+    throw err;
+  }
+};

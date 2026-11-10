@@ -51,7 +51,7 @@ export const login = async (req, res, next) => {
 
     // generate access token
     const accessToken = jwt.sign(
-      { id: user._id, name: user.name },
+      { id: user._id, username: user.username },
       process.env.ACCESS_TOKEN_SECRETE,
       { expiresIn: "1h" },
     );
@@ -77,6 +77,7 @@ export const login = async (req, res, next) => {
       maxAge: 60 * 60 * 1000,
     });
 
+    // Send the access  token in the response body.
     res.status(200).json({
       success: true,
       message: "Loged in successfully!",
@@ -87,13 +88,13 @@ export const login = async (req, res, next) => {
   }
 };
 
+// Generating a new accesstoken forom the refresh token
 export const refreshToken = async (req, res, next) => {
   try {
     const token = req.cookies.refreshToken;
-
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRETE);
     if (!decoded) {
-      throw new AppError("Token not find or expired", 401);
+      throw new AppError("Token not found or expired", 401);
     }
 
     const hashedToken = createhashToken(token);
@@ -108,7 +109,7 @@ export const refreshToken = async (req, res, next) => {
 
     // Generate new access token
     const accessToken = jwt.sign(
-      { id: decoded.id },
+      { id: decoded.id, username: user.username },
       process.env.ACCESS_TOKEN_SECRETE,
       { expiresIn: "15m" },
     );
@@ -123,6 +124,7 @@ export const refreshToken = async (req, res, next) => {
   }
 };
 
+// Logout a user
 export const logout = async (req, res, next) => {
   try {
     const token = req.cookies.refreshToken;

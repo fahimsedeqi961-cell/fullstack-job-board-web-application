@@ -1,14 +1,16 @@
 import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { X, Menu, Moon, Sun, User, ChevronDown } from "lucide-react";
+import { X, Menu, Moon, Sun, User, ChevronDown, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
 import { ThemeContext } from "../../context/themeContext";
+import { AuthContext } from "../../context/authContext";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user, logout, isInitializing } = useContext(AuthContext);
   const { t, i18n } = useTranslation();
 
   const navLinks = [
@@ -27,6 +29,10 @@ function Navbar() {
   const closeMobileMenu = () => {
     setIsOpen(false);
   };
+
+  const userInitial = user?.username
+    ? user.username.charAt(0).toUpperCase()
+    : "";
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/95">
@@ -116,17 +122,62 @@ function Navbar() {
             </div>
 
             {/* Login */}
-            <Link
-              to="/login"
-              className="flex items-center gap-2 rounded-lg
-              bg-blue-600 px-4 py-2.5
-              text-sm font-semibold text-white
-              transition-colors
-              hover:bg-blue-700"
-            >
-              <User size={18} />
-              <span>{t("nav.login")}</span>
-            </Link>
+
+            {isInitializing ? (
+              // Authentication loading state
+              <div className="h-10 w-10 rounded-full bg-gray-200 animate-pulse" />
+            ) : user ? (
+              // Authenticated user profile
+              <div className="relative">
+                <button
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-xl hover:bg-slate-50 border border-slate-100 bg-slate-50/50"
+                >
+                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold font-mono uppercase">
+                    {user?.username?.charAt(0).toUpperCase()}
+                  </div>
+
+                  <span className="max-w-[80px] truncate capitalize">
+                    {user.username}
+                  </span>
+
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-200 ${
+                      showProfileMenu ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {showProfileMenu && (
+                  <div className="absolute right-0 top-full mt-2 w-48 border border-slate-100 rounded-xl shadow-xl bg-white py-2 z-50 text-left animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="px-4 py-2 text-xs font-medium text-slate-400 border-b border-slate-100 truncate">
+                      {user.username}
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        logout();
+                        setShowProfileMenu(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm font-medium hover:bg-rose-50 text-rose-600 transition-colors"
+                    >
+                      <LogOut size={16} />
+                      <span>Sign out profile</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              // Guest user
+              <Link
+                to="/login"
+                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+              >
+                <User size={18} />
+                <span>{t("nav.login")}</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
