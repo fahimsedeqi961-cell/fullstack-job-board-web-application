@@ -41,5 +41,9 @@
     "label": "Ready to get started",
     "title": "Your Next Opportunity Starts Here",
     "subtitle": "Join thousands of professionals and companies leveraging our platform to find exceptional career paths and discover elite industry talent."
+  },
+  "findJobs": {
+    "title": "Find Your Next Opportunity",
+    "subtitle": "Explore thousands of job opportunities and discover the perfect role to match your skills, experience, and career goals."
   }
 }

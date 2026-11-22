@@ -42,6 +42,7 @@ export const SavedJobsProvider = ({ children }) => {
     }
   };
 
+  // Checks whther job exists within saved jobs array
   const isSaved = (id) => savedJobs.includes(id);
 
   return (

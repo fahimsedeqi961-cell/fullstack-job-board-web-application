@@ -2,9 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import JobDetails from "./pages/JobDetails.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/home/Home.jsx";
-import FindJobs from "./pages/FindJobs.jsx";
 import { Toaster } from "react-hot-toast";
 import AuthPage from "./pages/authPage.jsx";
+import FindJobs from "./pages/findJobs/FindJobs.jsx";
 
 function App() {
   return (

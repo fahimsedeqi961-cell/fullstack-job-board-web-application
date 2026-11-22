@@ -7,17 +7,20 @@ import { ThemeProvider } from "./context/themeContext.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/authContext.jsx";
 import { SavedJobsProvider } from "./context/savedJobsContext.jsx";
+import { JobsProvider } from "./context/findJobsContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <SavedJobsProvider>
-        <ThemeProvider>
-          <AuthProvider>
-            <App />
-          </AuthProvider>
-        </ThemeProvider>
-      </SavedJobsProvider>
+      <JobsProvider>
+        <SavedJobsProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <App />
+            </AuthProvider>
+          </ThemeProvider>
+        </SavedJobsProvider>
+      </JobsProvider>
     </BrowserRouter>
   </StrictMode>,
 );

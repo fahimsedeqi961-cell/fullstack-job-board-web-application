@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import JobCard from "../../components/JobCard";
-import { getJobs } from "../../api/JobsApi";
+import { getFeaturedjobs } from "../../api/JobsApi";
 import { Link } from "react-router-dom";
 
 const FeaturedJobs = () => {
@@ -11,7 +11,7 @@ const FeaturedJobs = () => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const data = await getJobs();
+        const data = await getFeaturedjobs();
         setJobs(data.jobs || []);
       } catch (err) {
         console.log("Error Loading jobs...", err);
