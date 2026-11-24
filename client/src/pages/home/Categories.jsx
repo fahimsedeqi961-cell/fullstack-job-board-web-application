@@ -99,7 +99,7 @@ const CategoriesSection = () => {
           </div>
 
           <Link
-            to="/categories"
+            to="/findJobs"
             className="group inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
           >
             <span>Browse all categories</span>
@@ -121,7 +121,7 @@ const CategoriesSection = () => {
             const IconComponent = ICON_MAP[matchedKey] || Layers;
             return (
               <Link
-                to={`/jobs?category=${encodeURIComponent(category.category)}`}
+                to={`/findJobs?category=${encodeURIComponent(category.category)}`}
                 key={category.id || index}
                 className="group flex items-center gap-4 rounded-xl border border-slate-200/60 bg-transparent p-5 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-lg hover:shadow-slate-100 dark:border-slate-800 dark:hover:bg-slate-900 dark:hover:shadow-none"
               >

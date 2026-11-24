@@ -9,7 +9,7 @@ export const getALlJobs = async (req, res, next) => {
       location,
       category,
       type,
-      limit = 10,
+      limit = 6,
       page = 1,
       sort,
     } = req.query;

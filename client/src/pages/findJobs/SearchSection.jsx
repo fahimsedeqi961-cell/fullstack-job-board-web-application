@@ -1,13 +1,13 @@
 import { MapPin, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const SearchSection = (
+const SearchSection = ({
   search,
   location,
   handleOnSearch,
   setSearch,
   setLocation,
-) => {
+}) => {
   const { t } = useTranslation();
 
   return (
